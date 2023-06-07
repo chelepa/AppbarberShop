@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: barberShop
+  flyway:
+    enabled: true
+    password: ${MYSQL_PASSWORD}
+    user: ${MYSQL_USERNAME}
+    url: jdbc:mariadb://${MYSQL_HOST}:${MYSQL_PORT}/
+    schemas: ${MYSQL_DB}
+  jwtSecret: ${JWT_SECRET}
+  main:
+    allow-circular-references: true
+
+  datasource:
+    url: jdbc:mariadb://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}?reconnect=TRUE?createDatabaseIfNotExist=TRUE
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  mail:
+    host: ${SMTP}
+    port: 587
+    username: ${HOSTINGER_EMAIL}
+    password: ${HOSTINGER_PASSWORD}
+    properties:
+      "mail.smtp.ssl.trust": ${SMTP}
+      "mail.smtp.auth": true
+      "mail.smtp.starttls.enable": true
+      "mail.smtp.starttls.required": true
+
+e-mail-sender:
+  emailFrom: "claudimir.chelepa@chelepa.net"
+  title: "Hello from Spring Boot Application"
+  text: "<p>Hello from Spring Boot Application</p>"
