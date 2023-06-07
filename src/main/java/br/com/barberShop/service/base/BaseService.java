@@ -65,4 +65,19 @@ public class BaseService {
         var response = (id == null) ? Optional.empty() : permissionRepository.findById(id);
         return (PermissionEntity) response.orElse(null);
     }
+
+    protected List<PermissionEntity> searchAllPermission() {
+        return permissionRepository.findAll();
+    }
+
+    protected PermissionEntity savePermission(PermissionEntity permissionEntity) {
+        return permissionRepository.saveAndFlush(permissionEntity);
+    }
+
+    protected void deletePermission(Integer id) {
+        var response = this.searchPermissionId(id);
+        if (response != null){
+            permissionRepository.delete(response);
+        }
+    }
 }

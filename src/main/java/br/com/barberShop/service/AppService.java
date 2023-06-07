@@ -24,11 +24,11 @@ public interface AppService {
 
     List<PermissionResponseDTO> getAllPermission();
 
-    PermissionResponseDTO createPermission(PermissionRequestDTO group);
+    PermissionResponseDTO createPermission(PermissionRequestDTO permission);
 
     void deletePermissionById(Integer id);
 
-    PermissionResponseDTO updatePermissionById(Integer id, PermissionRequestDTO permission);
+    PermissionResponseDTO updatePermissionById(PermissionRequestDTO permission);
 
     GroupResponseDTO findGroupById(Integer id);
 
