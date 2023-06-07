@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PermissionRequestDTO {
 
+    private Integer id;
     private String permission;
     private String description;
 }

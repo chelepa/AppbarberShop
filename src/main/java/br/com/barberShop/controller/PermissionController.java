@@ -28,8 +28,8 @@ public class PermissionController {
     }
 
     @PostMapping(value = "/v1/permission")
-    public ResponseEntity<PermissionResponseDTO> savePermission(@RequestBody PermissionRequestDTO group) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(appService.createPermission(group));
+    public ResponseEntity<PermissionResponseDTO> cratePermission(@RequestBody PermissionRequestDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(appService.createPermission(request));
     }
 
     @DeleteMapping(value = "/v1/permission/{id}")
@@ -40,6 +40,7 @@ public class PermissionController {
 
     @PutMapping(value = "/v1/permission/{id}")
     public ResponseEntity<PermissionResponseDTO> updatePermission(@PathVariable("id") Integer id, @RequestBody PermissionRequestDTO permission){
-        return ResponseEntity.status(HttpStatus.OK).body(appService.updatePermissionById(id, permission));
+        permission.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(appService.updatePermissionById(permission));
     }
 }

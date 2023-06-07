@@ -56,27 +56,27 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public PermissionResponseDTO findPermissionById(Integer id) {
-        return null;
+        return permissionService.findPermissionById(id);
     }
 
     @Override
     public List<PermissionResponseDTO> getAllPermission() {
-        return null;
+        return permissionService.getAllPermission();
     }
 
     @Override
-    public PermissionResponseDTO createPermission(PermissionRequestDTO group) {
-        return null;
+    public PermissionResponseDTO createPermission(PermissionRequestDTO permission) {
+        return permissionService.createPermission(permission);
     }
 
     @Override
     public void deletePermissionById(Integer id) {
-
+        permissionService.deletePermissionById(id);
     }
 
     @Override
-    public PermissionResponseDTO updatePermissionById(Integer id, PermissionRequestDTO permission) {
-        return null;
+    public PermissionResponseDTO updatePermissionById(PermissionRequestDTO permission) {
+        return permissionService.updatePermission(permission);
     }
 
     @Override
