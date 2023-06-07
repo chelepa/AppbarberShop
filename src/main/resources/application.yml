@@ -29,6 +29,6 @@ spring:
       "mail.smtp.starttls.required": true
 
 e-mail-sender:
-  emailFrom: "claudimir.chelepa@chelepa.net"
+  emailFrom: ${HOSTINGER_EMAIL}
   title: "Hello from Spring Boot Application"
   text: "<p>Hello from Spring Boot Application</p>"
