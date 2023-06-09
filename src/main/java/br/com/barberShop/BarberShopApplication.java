@@ -1,5 +1,6 @@
 package br.com.barberShop;
 
+import br.com.barberShop.converter.UsersEntityToCustomerDetailsConverter;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,9 @@ public class BarberShopApplication {
 
 	@Bean
 	public ModelMapper modelMapper() {
-		return new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.addConverter(new UsersEntityToCustomerDetailsConverter());
+		return modelMapper;
 	}
 
 	@Bean

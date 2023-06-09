@@ -34,6 +34,12 @@ public class BaseService {
         return (UsersEntity) response;
     }
 
+    protected UsersEntity searchCustomerByEmail(String email) {
+        Optional<UsersEntity> repository = userRepository.findByEmail(email);
+        var response = repository.isPresent() ? repository.get() : Optional.empty();
+        return (UsersEntity) response;
+    }
+
     protected void deleteCustomer(Long id) {
         var response = this.searchCustomerById(id);
         if (response != null){
