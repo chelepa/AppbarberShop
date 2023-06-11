@@ -21,9 +21,4 @@ public class BarberShopApplication {
 		modelMapper.addConverter(new UsersEntityToCustomerDetailsConverter());
 		return modelMapper;
 	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

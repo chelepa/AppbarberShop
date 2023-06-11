@@ -10,13 +10,14 @@ import br.com.barberShop.dto.group.GroupRequestDTO;
 import br.com.barberShop.dto.group.GroupResponseDTO;
 import br.com.barberShop.dto.permission.PermissionRequestDTO;
 import br.com.barberShop.dto.permission.PermissionResponseDTO;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface AppService {
 
-    String sendEmail(EmailRequestDTO request);
+    String sendEmail(HttpServletRequest httpServletRequest, EmailRequestDTO request);
 
     CustomerResponseDTO createUser(CustomerRequestDTO customer);
 
@@ -47,4 +48,6 @@ public interface AppService {
     GroupResponseDTO updateGroupById(GroupRequestDTO group);
 
     AuthenticateResponseDTO authenticate(HttpServletRequest request, AuthenticateRequestDTO authenticate);
+
+    ModelAndView showChangePasswordPage(String token);
 }
