@@ -1,6 +1,8 @@
 package br.com.barberShop.controller;
 
-import br.com.barberShop.dto.EmailRequestDTO;
+import br.com.barberShop.dto.password.EmailRequestDTO;
+import br.com.barberShop.dto.password.ResetPasswordRequestDTO;
+import br.com.barberShop.dto.password.ResetPasswordResponseDTO;
 import br.com.barberShop.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,5 +26,10 @@ public class ResetPasswordController {
     @GetMapping("/v1/Customer/changePassword")
     public ModelAndView showChangePasswordPage(@RequestParam("token") String token) {
         return appService.showChangePasswordPage(token);
+    }
+
+    @PostMapping(value = "/v1/Customer/updatePassword")
+    public ResponseEntity<ResetPasswordResponseDTO> updatePassword(@RequestBody ResetPasswordRequestDTO request) {
+        return ResponseEntity.status(HttpStatus.OK).body(appService.updatePassword(request));
     }
 }

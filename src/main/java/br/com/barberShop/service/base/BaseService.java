@@ -99,6 +99,10 @@ public class BaseService {
         response.setToken(token);
         response.setId_users(user);
         response.setExpiryDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).plusMinutes(10));
+        return this.createPasswordReset(response);
+    }
+
+    protected PasswordResetEntity createPasswordReset(PasswordResetEntity response) {
         return passwordResetRepository.save(response);
     }
 

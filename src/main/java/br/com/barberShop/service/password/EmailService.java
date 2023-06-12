@@ -2,7 +2,7 @@ package br.com.barberShop.service.password;
 
 import br.com.barberShop.config.ConsulConfig;
 import br.com.barberShop.constants.ErrorCodes;
-import br.com.barberShop.dto.EmailRequestDTO;
+import br.com.barberShop.dto.password.EmailRequestDTO;
 import br.com.barberShop.exceptions.LoginNullException;
 import br.com.barberShop.service.base.BaseService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class EmailService extends BaseService {
         String url_token = URL + "/v1/Customer/changePassword?token=" + token;
 
         mailSender.send(constructEmail(config.getTitle(), url_token, request.getEmail()));
-        log.info("EmailService.SendEmail - Start - EmailRequestDTO: [{}], Response : [{}]", request, response);
+        log.info("EmailService.SendEmail - End - EmailRequestDTO: [{}], Response : [{}]", request, response);
         return "E-mail Enviado";
     }
 
@@ -44,7 +44,7 @@ public class EmailService extends BaseService {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject(subject);
         email.setText(body);
-        email.setTo("cl.chelepa@gmail.com");
+        email.setTo(emailTo);
         email.setFrom(config.getEmailFrom());
         return email;
     }

@@ -40,7 +40,8 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring().antMatchers(
                 "/swagger-ui/index.html#/",
                 "/v3/api-docs/**",
-                "/v1/Customer/changePassword"
+                "/v1/Customer/changePassword",
+                "/v1/Customer/updatePassword"
         );
     }
 
