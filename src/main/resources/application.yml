@@ -31,4 +31,4 @@ spring:
 e-mail-sender:
   emailFrom: ${HOSTINGER_EMAIL}
   title: "Hello from Spring Boot Application"
-  text: "<p>Hello from Spring Boot Application</p>"
+  text: "<p>Teste de URL</p>"

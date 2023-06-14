@@ -1,4 +1,4 @@
-package br.com.barberShop.dto;
+package br.com.barberShop.dto.password;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

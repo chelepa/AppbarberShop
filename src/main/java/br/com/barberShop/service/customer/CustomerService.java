@@ -1,5 +1,6 @@
 package br.com.barberShop.service.customer;
 
+import br.com.barberShop.dto.customer.CustomerDetails;
 import br.com.barberShop.dto.customer.CustomerRequestDTO;
 import br.com.barberShop.dto.customer.CustomerResponseDTO;
 import br.com.barberShop.entity.GroupEntity;
@@ -51,5 +52,13 @@ public class CustomerService extends BaseService {
         log.info("CustomerService.deleteCustomerById - Start - Id: [{}] ", id);
         this.deleteCustomer(id);
         log.info("CustomerService.deleteCustomerById - End - Id: [{}] - Deleted", id);
+    }
+
+    public CustomerDetails customerFindByLogin(String email) {
+        log.info("CustomerService.customerFindByLogin - Start - Email: [{}] ", email);
+        UsersEntity userResponse = this.searchCustomerByEmail(email);
+        CustomerDetails response = modelMapper.map(userResponse, CustomerDetails.class);
+        log.info("CustomerService.customerFindByLogin - End - Email: [{}], Response: [{}] ", email, response);
+        return response;
     }
 }

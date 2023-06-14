@@ -1,19 +1,28 @@
 package br.com.barberShop.service;
 
-import br.com.barberShop.dto.EmailRequestDTO;
+import br.com.barberShop.dto.password.EmailRequestDTO;
+import br.com.barberShop.dto.authenticate.AuthenticateRequestDTO;
+import br.com.barberShop.dto.authenticate.AuthenticateResponseDTO;
+import br.com.barberShop.dto.customer.CustomerDetails;
 import br.com.barberShop.dto.customer.CustomerRequestDTO;
 import br.com.barberShop.dto.customer.CustomerResponseDTO;
 import br.com.barberShop.dto.group.GroupRequestDTO;
 import br.com.barberShop.dto.group.GroupResponseDTO;
+import br.com.barberShop.dto.password.ResetPasswordRequestDTO;
+import br.com.barberShop.dto.password.ResetPasswordResponseDTO;
 import br.com.barberShop.dto.permission.PermissionRequestDTO;
 import br.com.barberShop.dto.permission.PermissionResponseDTO;
+import br.com.barberShop.service.authenticate.AuthenticateSecurityService;
 import br.com.barberShop.service.customer.CustomerService;
-import br.com.barberShop.service.email.EmailService;
+import br.com.barberShop.service.password.EmailService;
 import br.com.barberShop.service.group.GroupService;
+import br.com.barberShop.service.password.PasswordResetService;
 import br.com.barberShop.service.permission.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -32,9 +41,15 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private PermissionService permissionService;
 
+    @Autowired
+    private AuthenticateSecurityService authenticateSecurityService;
+
+    @Autowired
+    private PasswordResetService passwordResetService;
+
     @Override
-    public String sendEmail(EmailRequestDTO request) {
-        return emailService.sendEmail(request);
+    public String sendEmail(HttpServletRequest httpServletRequest, EmailRequestDTO request) {
+        return emailService.sendEmail(httpServletRequest, request);
     }
 
     @Override
@@ -52,6 +67,11 @@ public class AppServiceImpl implements AppService {
     public CustomerResponseDTO updateCustomer(CustomerRequestDTO customer) {
         var groupList = groupService.findGroupById(customer.getGroup());
         return customerService.updateCustomer(customer, groupList);
+    }
+
+    @Override
+    public CustomerDetails customerFindByLogin(String email) {
+        return customerService.customerFindByLogin(email);
     }
 
     @Override
@@ -104,5 +124,20 @@ public class AppServiceImpl implements AppService {
     public GroupResponseDTO updateGroupById(GroupRequestDTO group) {
         var permission = permissionService.findByPermissionList(group.getPermission());
         return groupService.updateGroupById(group, permission);
+    }
+
+    @Override
+    public AuthenticateResponseDTO authenticate(HttpServletRequest request, AuthenticateRequestDTO authenticate) {
+        return authenticateSecurityService.authenticate(request, authenticate);
+    }
+
+    @Override
+    public ModelAndView showChangePasswordPage(String token) {
+        return passwordResetService.showChangePasswordPage(token);
+    }
+
+    @Override
+    public ResetPasswordResponseDTO updatePassword(ResetPasswordRequestDTO request) {
+        return passwordResetService.updatePassword(request);
     }
 }

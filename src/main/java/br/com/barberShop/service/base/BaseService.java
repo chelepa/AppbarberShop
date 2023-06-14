@@ -1,14 +1,18 @@
 package br.com.barberShop.service.base;
 
 import br.com.barberShop.entity.GroupEntity;
+import br.com.barberShop.entity.PasswordResetEntity;
 import br.com.barberShop.entity.PermissionEntity;
 import br.com.barberShop.entity.UsersEntity;
 import br.com.barberShop.repository.GroupRepository;
+import br.com.barberShop.repository.PasswordResetRepository;
 import br.com.barberShop.repository.PermissionRepository;
 import br.com.barberShop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +28,21 @@ public class BaseService {
     @Autowired
     private GroupRepository groupRepository;
 
+    @Autowired
+    private PasswordResetRepository passwordResetRepository;
+
     protected UsersEntity createCustomer(UsersEntity usersEntity) {
         return userRepository.saveAndFlush(usersEntity);
     }
 
     protected UsersEntity searchCustomerById(Long id) {
         Optional<UsersEntity> repository = userRepository.findById(id);
+        var response = repository.isPresent() ? repository.get() : Optional.empty();
+        return (UsersEntity) response;
+    }
+
+    protected UsersEntity searchCustomerByEmail(String email) {
+        Optional<UsersEntity> repository = userRepository.findByEmail(email);
         var response = repository.isPresent() ? repository.get() : Optional.empty();
         return (UsersEntity) response;
     }
@@ -79,5 +92,21 @@ public class BaseService {
         if (response != null){
             permissionRepository.delete(response);
         }
+    }
+
+    protected PasswordResetEntity createPasswordResetTokenForUser(UsersEntity user, String token) {
+        PasswordResetEntity response = new PasswordResetEntity();
+        response.setToken(token);
+        response.setId_users(user);
+        response.setExpiryDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).plusMinutes(10));
+        return this.createPasswordReset(response);
+    }
+
+    protected PasswordResetEntity createPasswordReset(PasswordResetEntity response) {
+        return passwordResetRepository.save(response);
+    }
+
+    protected Optional<PasswordResetEntity> getTokenPasswordReset(String token) {
+        return passwordResetRepository.findByToken(token);
     }
 }
