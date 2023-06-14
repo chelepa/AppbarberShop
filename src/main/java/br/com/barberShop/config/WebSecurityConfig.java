@@ -37,12 +37,11 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(
-                "/swagger-ui/index.html#/",
-                "/v3/api-docs/**",
-                "/v1/Customer/changePassword",
-                "/v1/Customer/updatePassword"
-        );
+        return (web) -> web.ignoring()
+                .antMatchers(HttpMethod.POST,"/v1/Customer")
+                .antMatchers(HttpMethod.POST,"/v1/Customer/updatePassword")
+                .antMatchers(HttpMethod.GET,"/v1/Customer/changePassword")
+                .antMatchers("/swagger-ui/index.html#/","/v3/api-docs/**");
     }
 
     @Bean
@@ -62,7 +61,26 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity  http) throws Exception {
         http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable().authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/v1/Authentication").permitAll().antMatchers("/**").authenticated();
+                .antMatchers(HttpMethod.POST,"/v1/Customer").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.POST,"/v1/Customer/resetPassword").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.PUT,"/v1/Customer/*").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.DELETE,"/v1/Customer/*").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+
+                .antMatchers(HttpMethod.GET, "/v1/group").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.GET, "/v1/group/*").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.POST, "/v1/group").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.PUT, "/v1/group/*").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.DELETE, "/v1/group/*").hasAnyAuthority("ROLE_ADM")
+
+                .antMatchers(HttpMethod.GET, "/v1/permission").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.GET, "/v1/permission/*").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.POST, "/v1/permission").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.PUT, "/v1/permission/*").hasAnyAuthority("ROLE_ADM")
+                .antMatchers(HttpMethod.DELETE, "/v1/permission/*").hasAnyAuthority("ROLE_ADM")
+
+                .antMatchers(HttpMethod.POST, "/v1/Authentication").permitAll()
+                .antMatchers("/**").authenticated();
+
         http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
