@@ -1,13 +1,7 @@
 package br.com.barberShop.service.base;
 
-import br.com.barberShop.entity.GroupEntity;
-import br.com.barberShop.entity.PasswordResetEntity;
-import br.com.barberShop.entity.PermissionEntity;
-import br.com.barberShop.entity.UsersEntity;
-import br.com.barberShop.repository.GroupRepository;
-import br.com.barberShop.repository.PasswordResetRepository;
-import br.com.barberShop.repository.PermissionRepository;
-import br.com.barberShop.repository.UserRepository;
+import br.com.barberShop.entity.*;
+import br.com.barberShop.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +24,9 @@ public class BaseService {
 
     @Autowired
     private PasswordResetRepository passwordResetRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     protected UsersEntity createCustomer(UsersEntity usersEntity) {
         return userRepository.saveAndFlush(usersEntity);
@@ -108,5 +105,23 @@ public class BaseService {
 
     protected Optional<PasswordResetEntity> getTokenPasswordReset(String token) {
         return passwordResetRepository.findByToken(token);
+    }
+
+    protected ServiceEntity saveService(ServiceEntity serviceEntity) {
+        return serviceRepository.save(serviceEntity);
+    }
+
+    protected ServiceEntity searchServiceById(Integer id) {
+        var repository = serviceRepository.findById(Long.valueOf(id));
+        var response = repository.isPresent() ? repository.get() : Optional.empty();
+        return (ServiceEntity) response;
+    }
+
+    protected List<ServiceEntity> searchAllService() {
+        return serviceRepository.findAll();
+    }
+
+    protected void deleteService(Integer id) {
+        serviceRepository.deleteById(Long.valueOf(id));
     }
 }

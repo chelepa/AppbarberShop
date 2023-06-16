@@ -12,12 +12,15 @@ import br.com.barberShop.dto.password.ResetPasswordRequestDTO;
 import br.com.barberShop.dto.password.ResetPasswordResponseDTO;
 import br.com.barberShop.dto.permission.PermissionRequestDTO;
 import br.com.barberShop.dto.permission.PermissionResponseDTO;
+import br.com.barberShop.dto.service.ServiceRequestDTO;
+import br.com.barberShop.dto.service.ServiceResponseDTO;
 import br.com.barberShop.service.authenticate.AuthenticateSecurityService;
 import br.com.barberShop.service.customer.CustomerService;
 import br.com.barberShop.service.password.EmailService;
 import br.com.barberShop.service.group.GroupService;
 import br.com.barberShop.service.password.PasswordResetService;
 import br.com.barberShop.service.permission.PermissionService;
+import br.com.barberShop.service.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +49,9 @@ public class AppServiceImpl implements AppService {
 
     @Autowired
     private PasswordResetService passwordResetService;
+
+    @Autowired
+    private ServiceService serviceService;
 
     @Override
     public String sendEmail(HttpServletRequest httpServletRequest, EmailRequestDTO request) {
@@ -139,5 +145,30 @@ public class AppServiceImpl implements AppService {
     @Override
     public ResetPasswordResponseDTO updatePassword(ResetPasswordRequestDTO request) {
         return passwordResetService.updatePassword(request);
+    }
+
+    @Override
+    public ServiceResponseDTO searchService(Integer id) {
+        return serviceService.searchService(id);
+    }
+
+    @Override
+    public List<ServiceResponseDTO> getAllService() {
+        return serviceService.getAllService();
+    }
+
+    @Override
+    public ServiceResponseDTO createService(ServiceRequestDTO service) {
+        return serviceService.createService(service);
+    }
+
+    @Override
+    public void deleteServiceById(Integer id) {
+        serviceService.deleteServiceById(id);
+    }
+
+    @Override
+    public ServiceResponseDTO updateService(ServiceRequestDTO service) {
+        return serviceService.updateService(service);
     }
 }

@@ -78,6 +78,12 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.PUT, "/v1/permission/*").hasAnyAuthority("ROLE_ADM")
                 .antMatchers(HttpMethod.DELETE, "/v1/permission/*").hasAnyAuthority("ROLE_ADM")
 
+                .antMatchers(HttpMethod.GET, "/v1/service").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.GET, "/v1/service/*").hasAnyAuthority("ROLE_ADM", "ROLE_USR", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.POST, "/v1/service").hasAnyAuthority("ROLE_ADM", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.PUT, "/v1/service/*").hasAnyAuthority("ROLE_ADM", "ROLE_USR_ADM")
+                .antMatchers(HttpMethod.DELETE, "/v1/service/*").hasAnyAuthority("ROLE_ADM", "ROLE_USR_ADM")
+
                 .antMatchers(HttpMethod.POST, "/v1/Authentication").permitAll()
                 .antMatchers("/**").authenticated();
 

@@ -12,6 +12,8 @@ import br.com.barberShop.dto.password.ResetPasswordRequestDTO;
 import br.com.barberShop.dto.password.ResetPasswordResponseDTO;
 import br.com.barberShop.dto.permission.PermissionRequestDTO;
 import br.com.barberShop.dto.permission.PermissionResponseDTO;
+import br.com.barberShop.dto.service.ServiceRequestDTO;
+import br.com.barberShop.dto.service.ServiceResponseDTO;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,4 +56,14 @@ public interface AppService {
     ModelAndView showChangePasswordPage(String token);
 
     ResetPasswordResponseDTO updatePassword(ResetPasswordRequestDTO request);
+
+    ServiceResponseDTO searchService(Integer id);
+
+    List<ServiceResponseDTO> getAllService();
+
+    ServiceResponseDTO createService(ServiceRequestDTO service);
+
+    void deleteServiceById(Integer id);
+
+    ServiceResponseDTO updateService(ServiceRequestDTO service);
 }
